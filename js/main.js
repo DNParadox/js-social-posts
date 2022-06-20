@@ -55,19 +55,47 @@ const myPosts = [
         like : '999'
     }
 ];
-
-// -------------
-// FUNCTIONS
-// -------------
-
 drawMyPosts(myPosts)
+// -------------
+// FUNCTIONS  1
+// -------------
+
+const likebutton = document.querySelectorAll('.js-like-button');
+
+const allFavouriteTexts = document.querySelectorAll('.js-likes-counter');
+console.log(allFavouriteTexts)
+for(let i = 0; i < likebutton.length; i++) {
+    const thislikebtn = likebutton[i];
+    thislikebtn.addEventListener('click', function(event) {
+        // Evitiamo il comportamento di default del browser
+        event.preventDefault();
+
+        // Incrementiamo il like solo se l'elemento su cui ho cliccato non ha gia classe clicked
+        if(!this.classList.contains('like-button--liked ')) {
+            // Aggiungo all'elemento cliccato la classe 'clicked'
+            this.classList.toggle('like-button--liked');
+            // Prenderci l'elemento html di testo che ha il numero relativo a questo btn
+            const relatedNumberText = allFavouriteTexts[i];
+            // Ci prendiamo il numero dentro relatedNumberText
+            let relatedNumber = parseInt(relatedNumberText.innerHTML);
+            console.log(relatedNumber);
+            // Incrementiamo di 1
+            relatedNumber++;
+            
+            // Scriviamo il numero incrementato dentro relatedNumberText
+            relatedNumberText.innerHTML = relatedNumber;
+        }
+    });
+}
 
 
 
 
 
 
-
+// -------------
+// FUNCTIONS  2
+// -------------
 
 
 function drawMyPosts(postsArray) {
@@ -81,35 +109,35 @@ function drawMyPosts(postsArray) {
         // Per ogni Post creo template e stampo
         const postTemplate = `
         <div class="post">
-        <div class="post__header">
-            <div class="post-meta">                    
-                <div class="post-meta__icon">
-                    <img class="profile-pic" src="${photo}" alt="Phil Mangione">                    
+            <div class="post__header">
+                <div class="post-meta">                    
+                    <div class="post-meta__icon">
+                        <img class="profile-pic" src="${photo}" alt="Phil Mangione">                    
+                    </div>
+                    <div class="post-meta__data">
+                        <div class="post-meta__author">${name}</div>
+                        <div class="post-meta__time">${date}</div>
+                    </div>                    
                 </div>
-                <div class="post-meta__data">
-                    <div class="post-meta__author">${name}</div>
-                    <div class="post-meta__time">${date}</div>
-                </div>                    
             </div>
+            <div class="post__text">${text}</div>
+            <div class="post__image">
+                <img src="${img}" alt="">
+            </div>
+            <div class="post__footer">
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <a class="like-button  js-like-button" href="#" data-postid="${idPost}">
+                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="like-button__label">Mi Piace</span>
+                        </a>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="like-counter-1" class="js-likes-counter">${like}</b> persone
+                    </div>
+                </div> 
+            </div>            
         </div>
-        <div class="post__text">${text}</div>
-        <div class="post__image">
-            <img src="${img}" alt="">
-        </div>
-        <div class="post__footer">
-            <div class="likes js-likes">
-                <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="${idPost}">
-                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="like-button__label">Mi Piace</span>
-                    </a>
-                </div>
-                <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${like}</b> persone
-                </div>
-            </div> 
-        </div>            
-    </div>
             `
         console.log(postsContainer)
             postsContainer.innerHTML += postTemplate;
