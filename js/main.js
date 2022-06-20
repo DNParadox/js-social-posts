@@ -17,23 +17,102 @@
 // 3. Al click su un pulsante "Mi Piace" di un post, se abbiamo già cliccato dobbiamo decrementare il contatore e cambiare il colore del bottone.
 
 
-myPost [ 
+const myPosts = [ 
     {
         idPost: 1, 
         name: 'Phil Mangione',
-        photo: null,
-        date : 6/25/2021,
-        text : 'Lorem',
-        img : 'Qui img',
+        photo: 'https://unsplash.it/300/300?image=15',
+        date : '6/25/2021',
+        text : 'Discorso sul riscaldamento globale...',
+        img : 'https://unsplash.it/300/300?image=15',
         like : '80'
     },
     {
         idPost: 2, 
         name: 'Sofia Perlari',
-        photo: null,
-        date : 3/9/2021,
-        text : 'Lorem',
-        img : 'Qui img',
+        photo: 'https://unsplash.it/300/300?image=15',
+        date :'3/9/2021',
+        text : 'Come fare il pollo alla piastra giallozafferano',
+        img : 'https://unsplash.it/300/300?image=15',
         like : '120'
+    },
+    {
+        idPost: 3, 
+        name: 'Leon Kennedy',
+        photo: 'https://m.media-amazon.com/images/S/aplus-media/sota/647d0d05-a73c-4d28-8a9f-812110fccd75.__CR1287,99,1142,1142_PT0_SX300_V1___.jpg',
+        date :'25/01/2019',
+        text : 'Bellissimo primo giorno a Racoon City (lie)',
+        img : 'null',
+        like : '5'
+    },
+    {
+        idPost: 4, 
+        name: 'Jerry Polemica',
+        photo: 'https://pbs.twimg.com/profile_images/660767345489657856/WPfYZZD3_400x400.jpg',
+        date :'3/9/2021',
+        text : "Sono l'uomo con la licenza polemica!",
+        img : 'https://upload.wikimedia.org/wikipedia/it/thumb/d/d7/Jerry_Polemica.jpg/1200px-Jerry_Polemica.jpg',
+        like : '999'
     }
-]
+];
+
+// -------------
+// FUNCTIONS
+// -------------
+
+drawMyPosts(myPosts)
+
+
+
+
+
+
+
+
+
+function drawMyPosts(postsArray) {
+    const postsContainer = document.querySelector('.post')
+
+    for(let i = 0; i < postsArray.length; i++){
+        const thisPost = postsArray[i];
+        const {idPost, name, photo, date, text, img, like} = thisPost;
+        // console.log(thisPost)
+
+        // Per ogni Post creo template e stampo
+        const postTemplate = `
+        <div class="post">
+        <div class="post__header">
+            <div class="post-meta">                    
+                <div class="post-meta__icon">
+                    <img class="profile-pic" src="${photo}" alt="Phil Mangione">                    
+                </div>
+                <div class="post-meta__data">
+                    <div class="post-meta__author">${name}</div>
+                    <div class="post-meta__time">${date}</div>
+                </div>                    
+            </div>
+        </div>
+        <div class="post__text">${text}</div>
+        <div class="post__image">
+            <img src="${img}" alt="">
+        </div>
+        <div class="post__footer">
+            <div class="likes js-likes">
+                <div class="likes__cta">
+                    <a class="like-button  js-like-button" href="#" data-postid="${idPost}">
+                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                        <span class="like-button__label">Mi Piace</span>
+                    </a>
+                </div>
+                <div class="likes__counter">
+                    Piace a <b id="like-counter-1" class="js-likes-counter">${like}</b> persone
+                </div>
+            </div> 
+        </div>            
+    </div>
+            `
+        console.log(postsContainer)
+            postsContainer.innerHTML += postTemplate;
+            
+    }
+}
