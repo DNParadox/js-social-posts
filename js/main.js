@@ -62,28 +62,47 @@ drawMyPosts(myPosts)
 
 const likebutton = document.querySelectorAll('.js-like-button');
 
-const allFavouriteTexts = document.querySelectorAll('.js-likes-counter');
-console.log(allFavouriteTexts)
+const likedpost = document.querySelectorAll('.js-likes-counter');
+
 for(let i = 0; i < likebutton.length; i++) {
     const thislikebtn = likebutton[i];
     thislikebtn.addEventListener('click', function(event) {
         // Evitiamo il comportamento di default del browser
         event.preventDefault();
 
+
+        // Prenderci l'elemento html di testo che ha il numero relativo a questo btn
+        const relatedNumberText = likedpost[i];
+
+
+        // Ci prendiamo il numero dentro relatedNumberText
+        let relatedCounterNumber = parseInt(relatedNumberText.innerHTML);
+
+
         // Incrementiamo il like solo se l'elemento su cui ho cliccato non ha gia classe clicked
-        if(!this.classList.contains('like-button--liked ')) {
+        if(!this.classList.contains('like-button--liked')) {
             // Aggiungo all'elemento cliccato la classe 'clicked'
-            this.classList.toggle('like-button--liked');
-            // Prenderci l'elemento html di testo che ha il numero relativo a questo btn
-            const relatedNumberText = allFavouriteTexts[i];
-            // Ci prendiamo il numero dentro relatedNumberText
-            let relatedNumber = parseInt(relatedNumberText.innerHTML);
-            console.log(relatedNumber);
+            this.classList.add('like-button--liked');
+        
+
             // Incrementiamo di 1
-            relatedNumber++;
+            relatedCounterNumber++;
+      
             
             // Scriviamo il numero incrementato dentro relatedNumberText
-            relatedNumberText.innerHTML = relatedNumber;
+            relatedNumberText.innerHTML = relatedCounterNumber;
+        } else {
+            // Rimuovo la classe "likedpost"
+            this.classList.remove('like-button--liked');
+
+
+            // Decrementiamo di 1    
+            relatedCounterNumber--;
+            
+
+            // Eseguiamo ancora una volta stamp
+            relatedNumberText.innerHTML = relatedCounterNumber;
+
         }
     });
 }
@@ -99,12 +118,12 @@ for(let i = 0; i < likebutton.length; i++) {
 
 
 function drawMyPosts(postsArray) {
-    const postsContainer = document.querySelector('.post')
+    const postsContainer = document.querySelector('.posts-list')
 
     for(let i = 0; i < postsArray.length; i++){
         const thisPost = postsArray[i];
         const {idPost, name, photo, date, text, img, like} = thisPost;
-        // console.log(thisPost)
+     
 
         // Per ogni Post creo template e stampo
         const postTemplate = `
